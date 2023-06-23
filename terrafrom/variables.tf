@@ -1,8 +1,8 @@
 variable "access_key" {
-        description = "AKIAWF5VR7XZL4RHU4UX"
+        description = "AKIAYEAQBGBHBGTCTNWE"
 }
 variable "secret_key" {
-        description = "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"
+        description = "YA6O5DopeUFOg+3KE/2CpMs8+46Vr14lza5BD93h"
 }
 
 variable "instance_type" {
@@ -25,13 +25,13 @@ variable "number_of_instances" {
 
 variable "aws_vpc_id" {
          description = "aws VPC id"
-         default     = "vpc-04e83383d2b6ba658"
+         default     = "vpc-0d343c0a32a5dd24b"
 }
 
 
 variable "subnet_id" {
         description = "The VPC subnet the instance(s) will be created in"
-        default = "subnet-056d0d77b4de4885a"
+        default = "subnet-01fac4be25d82c62e"
 }
 
 
@@ -48,7 +48,6 @@ variable "user_data_master" {
       sudo apt-add-repository ppa:ansible/ansible -y
       sudo apt update -y
       sudo apt install ansible -y
-
   EOF
 }
 
@@ -57,7 +56,6 @@ variable "user_data_node" {
   type    = string
   default = <<EOF
       #!/bin/bash
-
      sudo yum update -y
      sudo yum search docker -y
      sudo yum install docker -y
