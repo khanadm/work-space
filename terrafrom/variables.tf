@@ -1,8 +1,8 @@
 variable "access_key" {
-        description = "AKIARKYSBQXMEPERH6G2"
+        description = "AKIAXOPM5NDJVTXG6TAT"
 }
 variable "secret_key" {
-        description = "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"
+        description = "S8aaQsaWZ+8FO5FJSiC3dpURQjMk/7ktdHv98RAz"
 }
 
 variable "instance_type" {
@@ -25,13 +25,13 @@ variable "number_of_instances" {
 
 variable "aws_vpc_id" {
          description = "aws VPC id"
-         default     = "vpc-06780333d3dd20e64"
+         default     = "vpc-0dc916d1f6cd13817"
 }
 
 
 variable "subnet_id" {
         description = "The VPC subnet the instance(s) will be created in"
-        default = "subnet-05eaaf0ee55ebb2b9"
+        default = "subnet-042305f45188036c5"
 }
 
 
