@@ -1,10 +1,3 @@
-variable "access_key" {
-        description = "AKIAQHQE2ENGE7EMLDFZ"
-}
-variable "secret_key" {
-        description = "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"
-}
-
 variable "instance_type" {
         default = "t2.micro"
 }
@@ -25,13 +18,13 @@ variable "number_of_instances" {
 
 variable "aws_vpc_id" {
          description = "aws VPC id"
-         default     = "vpc-0e5e46f1bdb4c85f1"
+         default     = "vpc-00bbeb10805e92b3d"
 }
 
 
 variable "subnet_id" {
         description = "The VPC subnet the instance(s) will be created in"
-        default = "subnet-0cef4167472b0a5e9"
+        default = "subnet-015f8426dd298515b"
 }
 
 
