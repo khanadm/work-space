@@ -1,3 +1,12 @@
+variable "access_key" {
+        description = "AKIAUQEUJ26JPUHRYUEQ"
+}
+variable "secret_key" {
+        description = "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"
+}
+
+
+
 variable "instance_type" {
         default = "t2.micro"
 }
