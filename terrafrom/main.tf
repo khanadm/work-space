@@ -1,6 +1,6 @@
 provider "aws" {
   profile = "default"
-  region  = "ap-south-1"
+  region  = "eu-north-1"
 }
 
 resource "aws_security_group" "allow_tls" {
@@ -33,10 +33,11 @@ resource "aws_instance" "ec2_instance" {
     key_name = "${var.ami_key_pair_name}"
     vpc_security_group_ids = ["${aws_security_group.allow_tls.id}"]
     tags = {
-        "Name"      = count.index == 0 ? "ansible-master" : "ansible-node}"
+        "Name"      = count.index == 0 ? "ansible-master" : count.index == 1 ? "ansible-node1" : "ansible-node2"
         "AMI_ID"    = element(var.ami_id, count.index)
         
     }
    
-    user_data = count.index == 0 ? var.user_data_master : var.user_data_node
+    user_data = count.index == 0 ? var.user_data_master : count.index == 1 ? var.user_data_node1 : var.user_data_node2
+
 }
