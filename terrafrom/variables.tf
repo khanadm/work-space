@@ -5,12 +5,12 @@ variable "instance_type" {
 variable "ami_id" {
         description = "The AMI to use"
         type = list
-        default = ["ami-0989fb15ce71ba39e", "ami-0874ff0d73a3ab8cf", "ami-0874ff0d73a3ab8cf" ]
+        default = [ "ami-0874ff0d73a3ab8cf", "ami-0874ff0d73a3ab8cf" ]
 }
 
 variable "number_of_instances" {
         description = "number of instances to be created"
-        default = 3
+        default = 2
 }
 
 
@@ -32,32 +32,28 @@ variable "ami_key_pair_name" {
 }
 
 variable "php_application_user_data" {
-  type = string
+  type    = string
   default = <<-EOF
     #!/bin/bash
-    sudo yum update -y
-    sudo yum search docker -y
-    sudo yum install docker -y
-    sudo systemctl status docker.service
-    sudo systemctl start docker.service
-    sudo systemctl enable docker.service
-    sudo yum update
-    sudo yum install git -y
-    EOF
+    sudo dnf remove runc
+    sudo dnf config-manager --add-repo=https://download.docker.com/linux/centos/docker-ce.repo
+    sudo dnf update
+    sudo dnf install docker-ce docker-ce-cli containerd.io
+    sudo systemctl enable docker
+    sudo systemctl start docker
+  EOF
 }
 
 variable "Mysql_user_data" {
-  type = string
+  type    = string
   default = <<-EOF
     #!/bin/bash
-    sudo yum update -y
-    sudo yum search docker -y
-    sudo yum install docker -y
-    sudo systemctl status docker.service
-    sudo systemctl start docker.service
-    sudo systemctl enable docker.service
-    sudo yum update
-    sudo yum install git -y
-    EOF
+    sudo dnf remove runc
+    sudo dnf config-manager --add-repo=https://download.docker.com/linux/centos/docker-ce.repo
+    sudo dnf update
+    sudo dnf install docker-ce docker-ce-cli containerd.io
+    sudo systemctl enable docker
+    sudo systemctl start docker
+  EOF
 }
 
