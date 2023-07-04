@@ -24,7 +24,6 @@ resource "aws_security_group" "allow_tls" {
     }
 }
 
-
 resource "aws_instance" "ec2_instance" {
     ami = element(var.ami_id, count.index)
     count = "${var.number_of_instances}"
@@ -33,11 +32,10 @@ resource "aws_instance" "ec2_instance" {
     key_name = "${var.ami_key_pair_name}"
     vpc_security_group_ids = ["${aws_security_group.allow_tls.id}"]
     tags = {
-        "Name"      = count.index == 0 ? "ansible-master" : count.index == 1 ? "ansible-node1" : "ansible-node2"
+        "Name"      = count.index == 0 ? "php_application" : "MySQL}"
         "AMI_ID"    = element(var.ami_id, count.index)
-        
-    }
-   
-    user_data = count.index == 0 ? var.user_data_master : count.index == 1 ? var.user_data_node1 : var.user_data_node2
 
+    }
+
+    user_data = count.index == 0 ? var.php_application_user_data : var.Mysql_user_data
 }

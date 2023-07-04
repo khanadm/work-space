@@ -2,8 +2,6 @@ variable "instance_type" {
         default = "t3.micro"
 }
 
-
-
 variable "ami_id" {
         description = "The AMI to use"
         type = list
@@ -33,17 +31,7 @@ variable "ami_key_pair_name" {
         default = "terrform"
 }
 
-variable "user_data_master" {
-  type = string
-  default = <<-EOF
-    #!/bin/bash
-    sudo apt-add-repository ppa:ansible/ansible -y
-    sudo apt update -y
-    sudo apt install ansible -y
-    EOF
-}
-
-variable "user_data_node1" {
+variable "php_application_user_data" {
   type = string
   default = <<-EOF
     #!/bin/bash
@@ -58,7 +46,7 @@ variable "user_data_node1" {
     EOF
 }
 
-variable "user_data_node2" {
+variable "Mysql_user_data" {
   type = string
   default = <<-EOF
     #!/bin/bash
