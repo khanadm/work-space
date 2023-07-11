@@ -2,7 +2,7 @@
 **This is an interesting project!**
 
 
-Combination of Jenkins (CI/CD) pipelines, Terraform, Ansible, and Docker.
+Combinationss of Jenkins (CI/CD) pipelines, Terraform, Ansible, and Docker.
 
 First, we have to launch one server by using the above user data  under which Jenkins, Ansible, Terraform & git will present.
 
