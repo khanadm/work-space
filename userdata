@@ -17,4 +17,4 @@ sudo apt-get install ansible -y
 sudo apt-get install terraform -y
 
 sudo systemctl start jenkins
-
+sudo apt-get install python-boto3 -y

@@ -1,0 +1,9 @@
+---
+plugin: aws_ec2 
+regions:
+  - eu-north-1
+hostname:
+  - ip-address  
+groups:
+  php_application: "'php_application' in tags.Name"
+  MySQL: "'MySQL' in tags.Name" 

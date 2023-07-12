@@ -35,12 +35,13 @@ variable "php_application_user_data" {
   type    = string
   default = <<-EOF
     #!/bin/bash
-    sudo dnf remove runc
-    sudo dnf config-manager --add-repo=https://download.docker.com/linux/centos/docker-ce.repo
-    sudo dnf update
-    sudo dnf install docker-ce docker-ce-cli containerd.io
+    sudo dnf remove runc -y
+    sudo dnf config-manager --add-repo=https://download.docker.com/linux/centos/docker-ce.repo -y
+    sudo dnf update -y 
+    sudo dnf install docker-ce docker-ce-cli containerd.io -y
     sudo systemctl enable docker
     sudo systemctl start docker
+    sudo usermod -aG docker ec2-user
   EOF
 }
 
@@ -48,12 +49,13 @@ variable "Mysql_user_data" {
   type    = string
   default = <<-EOF
     #!/bin/bash
-    sudo dnf remove runc
-    sudo dnf config-manager --add-repo=https://download.docker.com/linux/centos/docker-ce.repo
-    sudo dnf update
-    sudo dnf install docker-ce docker-ce-cli containerd.io
-    sudo systemctl enable docker
-    sudo systemctl start docker
+    sudo dnf remove runc -y
+    sudo dnf config-manager --add-repo=https://download.docker.com/linux/centos/docker-ce.repo -y
+    sudo dnf update -y
+    sudo dnf install docker-ce docker-ce-cli containerd.io -y
+    sudo systemctl enable docker -y
+    sudo systemctl start docker -y
+    sudo usermod -aG docker ec2-user
   EOF
 }
 

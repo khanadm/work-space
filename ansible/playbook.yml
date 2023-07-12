@@ -1,40 +1,56 @@
 ---
-- hosts: client1
+- hosts: MySQL
   tasks:
+    - name: Update package cache
+      become: true
+      package:
+        name: '*'
+        state: latest
+        update_cache: yes
+
+    - name: Install Git
+      become: true
+      package:
+        name: git
+        state: present
     - name: Clone repository for mysql
       git:
-        repo: https://github.com/khanadm/Ansible-Docker-Terrafrom-Jenkins.git
-        dest: /home/sarfaraz/khan/
+        repo: https://github.com/khanadm/work-space.git
+        dest: /home/ec2-user/ongraph/
         clone: true
- 
-      vars:
-        ansible_become_pass: "sudo_password"
     - name: Build Docker image
-      command: docker build -t mysql /home/sarfaraz/khan/mysql
+      command: docker build -t mysql /home/ec2-user/ongraph/php_application/backend
     - name: Running  Docker container from  image
       command: docker run --name mysql -p 3306:3306 -d mysql
 
 
 
 
-
-- hosts: client2
+- hosts: php_application
   tasks:
+    - name: Update package cache
+      become: true
+      package:
+        name: '*'
+        state: latest
+        update_cache: yes
+
+    - name: Install Git
+      become: true
+      package:
+        name: git
+        state: present
     - name: Clone repository for mysql
       git:
-        repo: https://github.com/khanadm/Ansible-Docker-Terrafrom-Jenkins.git
-        dest: /home/sarfaraz/khan/
+        repo: https://github.com/khanadm/work-space.git
+        dest: /home/ec2-user/ongraph
         clone: true
-
-    - name: Fill DB_SERVER in Dockerfile
+    - name: Fill db_server_ip  in Dockerfile
       lineinfile:
-        path: /home/sarfaraz/khan/php-application/Dockerfile
+        path: /home/ec2-user/ongraph/php_application/frontend/Dockerfile
         regexp: '^ENV DB_SERVER='
-        line: 'ENV DB_SERVER={{ hostvars[groups.client1.0].ansible_default_ipv4.address if groups.client1|length > 0 else "" }}'
-      vars:
-        ansible_become_pass: "sudo_password"
+        line: 'ENV DB_SERVER={{ hostvars[groups.MySQL.0].public_ip_address if groups.MySQL|length > 0 else "" }}'
     - name: Build Docker image
-      command: docker build -t myapp /home/sarfaraz/khan/php-application  
-    - name: Build Docker image
-      command: docker run --name php_application -p 80:80 -d myapp 
-
+      command: docker build -t myapp /home/ec2-user/ongraph/php_application/frontend
+    - name: Build Docker container
+      command: docker run --name php_application -p 80:80 -d myapp
