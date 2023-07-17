@@ -32,7 +32,7 @@ resource "aws_instance" "ec2_instance" {
     key_name = "${var.ami_key_pair_name}"
     vpc_security_group_ids = ["${aws_security_group.allow_tls.id}"]
     tags = {
-        "Name"      = count.index == 0 ? "php_application" : "MySQL}"
+        "Name"      = count.index == 0 ? "php_application" : "MySQL" 
         "AMI_ID"    = element(var.ami_id, count.index)
 
     }

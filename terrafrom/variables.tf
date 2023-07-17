@@ -53,8 +53,8 @@ variable "Mysql_user_data" {
     sudo dnf config-manager --add-repo=https://download.docker.com/linux/centos/docker-ce.repo -y
     sudo dnf update -y
     sudo dnf install docker-ce docker-ce-cli containerd.io -y
-    sudo systemctl enable docker -y
-    sudo systemctl start docker -y
+    sudo systemctl enable docker 
+    sudo systemctl start docker 
     sudo usermod -aG docker ec2-user
   EOF
 }

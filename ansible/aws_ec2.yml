@@ -6,4 +6,4 @@ hostname:
   - ip-address  
 groups:
   php_application: "'php_application' in tags.Name"
-  MySQL: "'MySQL' in tags.Name" 
+  MySQL: "'MySQL' in tags.Name"    
