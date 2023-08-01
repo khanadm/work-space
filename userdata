@@ -18,3 +18,5 @@ sudo apt-get install terraform -y
 
 sudo systemctl start jenkins
 sudo apt-get install python-boto3 -y
+sudo mkdir current
+sudo chown -R jenkins:jenkins current

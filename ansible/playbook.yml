@@ -1,13 +1,46 @@
 ---
 - hosts: MySQL
+  become: true
   tasks:
+
+    - name: Add Docker CE repository
+      yum_repository:
+        name: docker-ce-stable
+        description: Docker CE Stable - $basearch
+        baseurl: https://download.docker.com/linux/centos/9/$basearch/stable
+        gpgcheck: yes
+        gpgkey: https://download.docker.com/linux/centos/gpg
+        enabled: yes
+
+    - name: Update packages
+      yum:
+        name: '*'
+        state: latest
+        exclude: docker-ce,docker-ce-cli,containerd.io
+
+    - name: Install Docker CE and dependencies
+      yum:
+        name: docker-ce,docker-ce-cli,containerd.io
+        state: present
+
+    - name: Enable and start Docker service
+      service:
+        name: docker
+        state: started
+        enabled: yes
+
+    - name: Add ec2-user to Docker group
+      user:
+        name: ec2-user
+        groups: docker
+        append: yes
+ 
     - name: Update package cache
       become: true
       package:
         name: '*'
         state: latest
         update_cache: yes
-
     - name: Install Git
       become: true
       package:
@@ -24,17 +57,48 @@
       command: docker run --name mysql -p 3306:3306 -d mysql
 
 
-
-
 - hosts: php_application
+  become: true
   tasks:
+
+    - name: Add Docker CE repository
+      yum_repository:
+        name: docker-ce-stable
+        description: Docker CE Stable - $basearch
+        baseurl: https://download.docker.com/linux/centos/9/$basearch/stable
+        gpgcheck: yes
+        gpgkey: https://download.docker.com/linux/centos/gpg
+        enabled: yes
+
+    - name: Update packages
+      yum:
+        name: '*'
+        state: latest
+        exclude: docker-ce,docker-ce-cli,containerd.io
+
+    - name: Install Docker CE and dependencies
+      yum:
+        name: docker-ce,docker-ce-cli,containerd.io
+        state: present
+
+    - name: Enable and start Docker service
+      service:
+        name: docker
+        state: started
+        enabled: yes
+
+    - name: Add ec2-user to Docker group
+      user:
+        name: ec2-user
+        groups: docker
+        append: yes
+ 
     - name: Update package cache
       become: true
       package:
         name: '*'
         state: latest
         update_cache: yes
-
     - name: Install Git
       become: true
       package:
@@ -43,8 +107,9 @@
     - name: Clone repository for mysql
       git:
         repo: https://github.com/khanadm/work-space.git
-        dest: /home/ec2-user/ongraph
+        dest: /home/ec2-user/ongraph/
         clone: true
+          
     - name: Fill db_server_ip  in Dockerfile
       lineinfile:
         path: /home/ec2-user/ongraph/php_application/frontend/Dockerfile
@@ -54,3 +119,5 @@
       command: docker build -t myapp /home/ec2-user/ongraph/php_application/frontend
     - name: Build Docker container
       command: docker run --name php_application -p 80:80 -d myapp
+    
+
